@@ -108,7 +108,7 @@ class Full extends Box {
     }
     
     function openOr($d) {
-        return $this->get();
+        return $this->open();
     }
     
     function map($f) {
