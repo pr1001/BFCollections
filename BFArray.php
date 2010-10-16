@@ -26,7 +26,7 @@ class BFArray extends ArrayIterator {
      */
     function __construct() {
         $args = func_get_args();
-        if (count($args) > 1 || (count($args) == 0 && !is_array($args[0]))) {
+        if (count($args) > 1 || (count($args) == 1 && !is_array($args[0]))) {
             parent::__construct($args);
         } else {
             parent::__construct($this->input2array($args[0]));
