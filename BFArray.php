@@ -56,31 +56,35 @@ class BFArray extends ArrayIterator {
     }
     
     function reduceLeft($initial, $callback) {
+        $values = $this->values();
         // if we have numbers we can use the native function but it's simpler to just use our general purpose method across the board
         if ($this->count() == 1) {
-            return call_user_func($callback, $initial, $this[0]);
+            return call_user_func($callback, $initial, $values[0]);
         } elseif ($this->count() > 1) {
-            return $this->slice(1)->reduceLeft(call_user_func($callback, $initial, $this[0]), $callback);
+            return $this->slice(1)->reduceLeft(call_user_func($callback, $initial, $values[0]), $callback);
         }
     }
     
     function reduceRight($terminating, $callback) {
+        $values = $this->values();
         if ($this->count() == 1) {
-            return call_user_func($callback, $terminating, $this[0]);
+            return call_user_func($callback, $terminating, $values[0]);
         } elseif ($this->count() > 1) {
-            return $this->slice(0, -1)->reduceRight(call_user_func($callback, $terminating, $this[$this->count() - 1]), $callback);
+            return $this->slice(0, -1)->reduceRight(call_user_func($callback, $terminating, $values[count($values) - 1]), $callback);
         }
     }
     
     function foldLeft($callback) {
+        $values = $this->values();
         if ($this->count() > 0) {
-            return $this->slice(1)->reduceLeft($this[0], $callback);
+            return $this->slice(1)->reduceLeft($values[0], $callback);
         }
     }
     
     function foldRight($callback) {
+        $values = $this->values();
         if ($this->count() > 0) {
-            return $this->slice(0, -1)->reduceRight($this[$this->count() - 1], $callback);
+            return $this->slice(0, -1)->reduceRight($values[count($values) - 1], $callback);
         }
     }
     
