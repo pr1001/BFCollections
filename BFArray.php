@@ -50,7 +50,7 @@ class BFArray extends ArrayIterator {
     }
     
     function contains($needle) {
-        return (array_search($needle, $this->getArray(), true) !== false ? true : false);
+        return (array_search($needle, $this->toArray(), true) !== false ? true : false);
     }
     
     function reduceLeft($initial, $callback) {
