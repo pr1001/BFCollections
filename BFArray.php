@@ -1,4 +1,5 @@
 <?php
+namespace com\bubblefoundry\collections;
 
 /**
  * @author Peter Robinett <peter@bubblefoundry.com>
@@ -18,7 +19,7 @@ function BFArray2array(BFArray $BFArray) {
     return $BFArray->toArray();
 }
 
-class BFArray extends ArrayIterator {
+class BFArray extends \ArrayIterator {
     
     /**
      * function __construct(mixed $arr)
@@ -37,6 +38,14 @@ class BFArray extends ArrayIterator {
     
     function toArray() {
         return $this->getArrayCopy();
+    }
+    
+    function toString() {
+      return "BFArray(" . $this->implode(", ") . ")";
+    }
+    
+    function implode($sep) {
+      return implode($sep, $this->toArray());
     }
     
     function merge($arr) {
@@ -103,27 +112,51 @@ class BFArray extends ArrayIterator {
         return ($this->count() == 0 ? true : false);
     }
     
+    function length() {
+      return $this->count();
+    }
+    
+    function unique() {
+      return new BFArray(array_unique($this->toArray()));
+    }
+    
+    function push($el) {
+      return new BFArray(array_push($this->toArray(), $el));
+    }
+    
+    function pop() {
+      return new BFArray(array_pop($this->toArray()));
+    }
+    
+    function unshift($el) {
+      return new BFArray(array_unshift($this->toArray(), $el));
+    }
+    
+    function shift() {
+      return new BFArray(array_shift($this->toArray()));
+    }
+    
+    function combineWithKeys(BFArray $keys) {
+      return new BFArray(array_combine($keys->toArray(), $this->toArray()));
+    }
+    
+    function combineWithValues(BFArray $values) {
+      return new BFArray(array_combine($this->toArray(), $values->toArray()));
+    }
+    
     /*
-        array_combine(array keys, array values)
         array_chunk(array input, int size [, bool preserve_keys])
         array_diff(array array1, array array2 [, array ...])
         array_fill(int start_index, int num, mixed value)
         array_flip(array trans)
         array_intersect(array array1, array array2 [, array ...])
         array_pad(array input, int pad_size, mixed pad_value)
-        array_pop(array &array)
         array_product(array array)
-        array_push(array &array, mixed var [, mixed ...])
-        array_reduce(array input, callback function [, int initial])
         array_rand(array input [, int num_req])
         array_reverse(array array [, bool preserve_keys])
         array_search(mixed needle, array haystack [, bool strict])
-        array_shift(array &array)
-        array_slice(array array, int offset [, int length [, bool preserve_keys]])
         array_splice(array &input, int offset [, int length [, array replacement]])
         array_sum(array array)
-        array_unique(array array)
-        array_unshift(array &array, mixed var [, mixed ...])
         array_udiff(array array1, array array2 [, array ..., callback data_compare_func])
         array_uintersect(array array1, array array2 [, array ..., callback data_compare_func])
         array_walk(array &array, callback funcname [, mixed userdata])
